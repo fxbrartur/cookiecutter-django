@@ -12,14 +12,14 @@ from __future__ import print_function
 
 import json
 import os
-import random
 import shutil
 import string
+import secrets
 
 try:
     # Inspired by
     # https://github.com/django/django/blob/master/django/utils/crypto.py
-    random = random.SystemRandom()
+    random = secrets.SystemRandom().SystemRandom()
     using_sysrandom = True
 except NotImplementedError:
     using_sysrandom = False
@@ -281,7 +281,7 @@ def generate_random_string(length, using_digits=False, using_ascii_letters=False
         unsuitable = {"'", '"', "\\", "$"}
         suitable = all_punctuation.difference(unsuitable)
         symbols += "".join(suitable)
-    return "".join([random.choice(symbols) for _ in range(length)])
+    return "".join([secrets.SystemRandom().choice(symbols) for _ in range(length)])
 
 
 def set_flag(file_path, flag, value=None, formatted=None, *args, **kwargs):
