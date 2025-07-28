@@ -14,9 +14,8 @@ import sys
 from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, NamedTuple
-
-import requests
 from github import Github
+from security import safe_requests
 
 if TYPE_CHECKING:
     from github.Issue import Issue
@@ -57,7 +56,7 @@ class DjVersion(NamedTuple):
 def get_package_info(package: str) -> dict:
     """Get package metadata using PyPI API."""
     # "django" converts to "Django" on redirect
-    r = requests.get(f"https://pypi.org/pypi/{package}/json", allow_redirects=True)
+    r = safe_requests.get(f"https://pypi.org/pypi/{package}/json", allow_redirects=True)
     if not r.ok:
         print(f"Couldn't find package: {package}")
         sys.exit(1)
