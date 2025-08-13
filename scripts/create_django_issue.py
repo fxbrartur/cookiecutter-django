@@ -57,7 +57,7 @@ class DjVersion(NamedTuple):
 def get_package_info(package: str) -> dict:
     """Get package metadata using PyPI API."""
     # "django" converts to "Django" on redirect
-    r = requests.get(f"https://pypi.org/pypi/{package}/json", allow_redirects=True)
+    r = requests.get(f"https://pypi.org/pypi/{package}/json", allow_redirects=True, timeout=60)
     if not r.ok:
         print(f"Couldn't find package: {package}")
         sys.exit(1)
